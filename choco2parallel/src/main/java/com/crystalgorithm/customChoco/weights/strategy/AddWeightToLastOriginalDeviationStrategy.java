@@ -7,13 +7,11 @@ import com.crystalgorithm.customChoco.weights.OriginalDeviationStrategy;
 
 public class AddWeightToLastOriginalDeviationStrategy implements OriginalDeviationStrategy
 {
-
     public void deviate(Map<String, Integer> weights)
     {
-        String minKey = Collections.min(weights.keySet());
-        int weightOfMainKey = weights.get(minKey);
+        String maxKey = Collections.max(weights.keySet());
+        int weightOfMaxKey = weights.get(maxKey);
 
-        weights.put(minKey, weightOfMainKey + 10);
+        weights.put(maxKey, weightOfMaxKey + 10);
     }
-
 }

@@ -7,9 +7,11 @@ import choco.cp.model.CPModel;
 import choco.kernel.model.Model;
 import choco.kernel.model.variables.integer.IntegerVariable;
 
+/**
+ * Refactored from the Choco2 documentation
+ */
 public class MagicSquareModel implements SolvableModel
 {
-
     private int sizeOfTheMagicSquare;
     private int magicSum;
 
@@ -66,6 +68,7 @@ public class MagicSquareModel implements SolvableModel
     private void createAllVariables()
     {
         allVariables = new IntegerVariable[(int) Math.pow(sizeOfTheMagicSquare, 2)];
+
         for (int i = 0; i < Math.pow(sizeOfTheMagicSquare, 2); i++)
         {
             allVariables[i] = variablesPerLine[i / sizeOfTheMagicSquare][i % sizeOfTheMagicSquare];
@@ -75,6 +78,7 @@ public class MagicSquareModel implements SolvableModel
     private void createColumnVariables(Model model)
     {
         variablesPerColumn = new IntegerVariable[sizeOfTheMagicSquare][sizeOfTheMagicSquare];
+
         for (int i = 0; i < sizeOfTheMagicSquare; i++)
         {
             for (int j = 0; j < sizeOfTheMagicSquare; j++)

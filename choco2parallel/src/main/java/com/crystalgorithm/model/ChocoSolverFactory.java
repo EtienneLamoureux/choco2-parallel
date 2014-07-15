@@ -8,7 +8,6 @@ import com.crystalgorithm.customChoco.weights.SharedHeuristicWeights;
 
 public class ChocoSolverFactory
 {
-
     private static final int SIZE_OF_THE_MAGIC_SQUARE = 5;
 
     public static Callable<Integer> createCallableEffectiveSolver()

@@ -10,7 +10,6 @@ import choco.kernel.solver.ContradictionException;
 import choco.kernel.solver.Solver;
 import choco.kernel.solver.constraints.SConstraint;
 import choco.kernel.solver.search.ValIterator;
-import choco.kernel.solver.variables.Var;
 import choco.kernel.solver.variables.integer.IntDomainVar;
 
 import com.crystalgorithm.customChoco.weights.SharedHeuristicWeights;
@@ -40,18 +39,6 @@ public class DomOverWDegBranchingSharedWeights extends DomOverWDegBranchingNew
     }
 
     @Override
-    protected void increaseVarWeights(Var currentVar)
-    {
-        super.increaseVarWeights(currentVar);
-    }
-
-    @Override
-    protected void decreaseVarWeights(Var currentVar)
-    {
-        super.decreaseVarWeights(currentVar);
-    }
-
-    @Override
     public void contradictionOccured(ContradictionException e)
     {
         super.contradictionOccured(e);
@@ -60,12 +47,6 @@ public class DomOverWDegBranchingSharedWeights extends DomOverWDegBranchingNew
         updateVariablesWeight();
 
         pushWeights();
-    }
-
-    private void pushWeights()
-    {
-        sharedVariablesWeight.pushWeights(updateVariablesWeight());
-        sharedConstraintsWeight.pushWeights(updateConstraintsWeight());
     }
 
     private Map<Object, Integer> updateConstraintsWeight()
@@ -86,16 +67,22 @@ public class DomOverWDegBranchingSharedWeights extends DomOverWDegBranchingNew
 
     private Map<Object, Integer> updateVariablesWeight()
     {
-        Map<Object, Integer> varialbesWeight = new HashMap<>();
+        Map<Object, Integer> variablesWeight = new HashMap<>();
         final DisposableIterator<IntDomainVar> varIterator = this.solver.getIntVarIterator();
 
         while (varIterator.hasNext())
         {
             final IntDomainVar var = varIterator.next();
-            varialbesWeight.put(var, var
+            variablesWeight.put(var, var
                     .getExtension(getAbstractSConstraintExtensionNumber(Utils.EXTENSION_IDENTIFIER)).get());
         }
 
-        return varialbesWeight;
+        return variablesWeight;
+    }
+
+    private void pushWeights()
+    {
+        sharedVariablesWeight.pushWeights(updateVariablesWeight());
+        sharedConstraintsWeight.pushWeights(updateConstraintsWeight());
     }
 }

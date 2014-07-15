@@ -27,6 +27,7 @@ public class ChocoSolver implements Callable<Integer>
     public ChocoSolver(SolvableModel model, int seed)
     {
         initModel(model);
+
         solver.addGoal(new DomOverWDegBranchingNew(solver, solver.getVar(model.getVariables()), new IncreasingDomain(),
                 seed));
     }
@@ -97,9 +98,7 @@ public class ChocoSolver implements Callable<Integer>
 
     private void solve()
     {
-        if (solver.solve())
-        {}
-        else
+        if (!(solver.solve()))
         {
             System.err.println("No solutions");
         }

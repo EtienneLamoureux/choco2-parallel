@@ -1,6 +1,3 @@
-/**
- * Same as the vanilla choco class, except the method "contradictionOccured" is not final
- */
 package com.crystalgorithm.customChoco;
 
 import static choco.cp.solver.search.integer.branching.domwdeg.DomWDegUtils.addConstraintExtension;
@@ -29,6 +26,10 @@ import choco.kernel.solver.propagation.listener.PropagationEngineListener;
 import choco.kernel.solver.variables.AbstractVar;
 import choco.kernel.solver.variables.Var;
 
+/**
+ * Same as the vanilla choco2 class, except the method "contradictionOccured" is not final to allow children to overload
+ * it.
+ */
 @SuppressWarnings("rawtypes")
 public abstract class AbstractDomOverWDegBranching extends AbstractLargeIntBranchingStrategy implements
         PropagationEngineListener,

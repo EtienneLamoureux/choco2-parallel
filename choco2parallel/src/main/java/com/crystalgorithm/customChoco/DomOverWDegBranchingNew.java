@@ -1,6 +1,3 @@
-/**
- * Extends custom version of AbstractDomOverWDegBranching to allow children to extend the "contradictionOccured" method
- */
 package com.crystalgorithm.customChoco;
 
 import choco.cp.solver.search.integer.varselector.ratioselector.ratios.RatioFactory;
@@ -10,6 +7,9 @@ import choco.kernel.solver.search.IntBranchingDecision;
 import choco.kernel.solver.search.ValIterator;
 import choco.kernel.solver.variables.integer.IntDomainVar;
 
+/**
+ * Extends custom version of AbstractDomOverWDegBranching to allow children to extend the "contradictionOccured" method
+ */
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class DomOverWDegBranchingNew extends AbstractDomOverWDegBranching
 {
