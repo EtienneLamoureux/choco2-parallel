@@ -5,8 +5,6 @@ import java.util.concurrent.ConcurrentMap;
 
 public interface WeightWeavingStrategy
 {
-
-    ConcurrentMap<String, Integer> weave(Map<String, Integer> medianWeights,
+    void weave(Map<String, Integer> medianWeights,
             ConcurrentMap<String, Integer> sharedWeights);
-
 }

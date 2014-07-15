@@ -7,7 +7,7 @@ import com.crystalgorithm.customChoco.weights.WeightWeavingStrategy;
 
 public class KeepMaxWeightWeavingStrategy implements WeightWeavingStrategy
 {
-    public ConcurrentMap<String, Integer> weave(Map<String, Integer> medianWeights,
+    public void weave(Map<String, Integer> medianWeights,
             ConcurrentMap<String, Integer> sharedWeights)
     {
         for (Map.Entry<String, Integer> entry : medianWeights.entrySet())
@@ -22,7 +22,5 @@ public class KeepMaxWeightWeavingStrategy implements WeightWeavingStrategy
                 sharedWeights.put(entry.getKey(), entry.getValue());
             }
         }
-
-        return sharedWeights;
     }
 }

@@ -29,7 +29,7 @@ public abstract class SharedHeuristicWeights
 
     public void update(Map<String, Integer> medianWeights)
     {
-        sharedWeights = weightWeavingStrategy.weave(medianWeights, sharedWeights);
+        weightWeavingStrategy.weave(medianWeights, sharedWeights);
     }
 
     public void pushWeights(Map<Object, Integer> weightedItems)

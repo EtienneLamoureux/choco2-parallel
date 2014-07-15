@@ -63,7 +63,7 @@ public class WeightsSynchronizer implements Callable<Integer>
     {
         Map<String, Set<Integer>> allSharedWeightsOrganized = organizeSharedWeights();
 
-        medianWeights = averagingStrategy.calculate(medianWeights, allSharedWeightsOrganized);
+        averagingStrategy.calculate(medianWeights, allSharedWeightsOrganized);
     }
 
     private Map<String, Set<Integer>> organizeSharedWeights()
@@ -72,24 +72,36 @@ public class WeightsSynchronizer implements Callable<Integer>
 
         for (SharedHeuristicWeights sharedHeuristicWeights : sharedHeuristicsWeights)
         {
-            Map<String, Integer> sharedWeights = sharedHeuristicWeights.shareWeights();
-
-            for (Entry<String, Integer> sharedWeight : sharedWeights.entrySet())
-            {
-                if (allSharedWeightsOrganized.containsKey(sharedWeight.getKey()))
-                {
-                    allSharedWeightsOrganized.get(sharedWeight.getKey()).add(sharedWeight.getValue());
-                }
-                else
-                {
-                    Set<Integer> sharedWeightsForOneEntry = new ConcurrentSkipListSet<>();
-                    sharedWeightsForOneEntry.add(sharedWeight.getValue());
-
-                    allSharedWeightsOrganized.put(sharedWeight.getKey(), sharedWeightsForOneEntry);
-                }
-            }
+            addWeightsToEachSharedEntry(allSharedWeightsOrganized, sharedHeuristicWeights);
         }
 
         return allSharedWeightsOrganized;
+    }
+
+    private void addWeightsToEachSharedEntry(Map<String, Set<Integer>> allSharedWeightsOrganized,
+            SharedHeuristicWeights sharedHeuristicWeights)
+    {
+        Map<String, Integer> sharedWeights = sharedHeuristicWeights.shareWeights();
+
+        for (Entry<String, Integer> sharedWeight : sharedWeights.entrySet())
+        {
+            addWeightToSharedEntry(allSharedWeightsOrganized, sharedWeight);
+        }
+    }
+
+    private void addWeightToSharedEntry(Map<String, Set<Integer>> allSharedWeightsOrganized,
+            Entry<String, Integer> sharedWeight)
+    {
+        if (allSharedWeightsOrganized.containsKey(sharedWeight.getKey()))
+        {
+            allSharedWeightsOrganized.get(sharedWeight.getKey()).add(sharedWeight.getValue());
+        }
+        else
+        {
+            Set<Integer> sharedWeightsForOneEntry = new ConcurrentSkipListSet<>();
+            sharedWeightsForOneEntry.add(sharedWeight.getValue());
+
+            allSharedWeightsOrganized.put(sharedWeight.getKey(), sharedWeightsForOneEntry);
+        }
     }
 }
